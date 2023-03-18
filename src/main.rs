@@ -245,7 +245,7 @@ fn main() -> Result<()> {
         if let Some(torrents) = resp.torrents.get(&locale) {
             if let Some(torrent) = torrents.get(&resolution) {
                 if matches.is_present("magnet") {
-                    println!(torrent.url);
+                    println!("{}", torrent.url);
                 } else {
                     println!("Opening magnet-link in default browser...");
                     webbrowser::open(&torrent.url)?;
