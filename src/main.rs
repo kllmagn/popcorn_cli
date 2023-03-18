@@ -116,6 +116,12 @@ fn main() -> Result<()> {
                 .about("Subcommand for downloading movies")
                 .arg(Arg::with_name("imdb_id").takes_value(true).required(true))
                 .arg(
+                    Arg::with_name("magnet")
+                        .short("m")
+                        .long("magnet")
+                        .takes_value(false),
+                )
+                .arg(
                     Arg::with_name("resolution")
                         .short("r")
                         .long("resolution")
@@ -238,8 +244,12 @@ fn main() -> Result<()> {
         }
         if let Some(torrents) = resp.torrents.get(&locale) {
             if let Some(torrent) = torrents.get(&resolution) {
-                println!("Opening magnet-link in default browser...");
-                webbrowser::open(&torrent.url)?;
+                if matches.is_present("magnet") {
+                    println!(torrent.url);
+                } else {
+                    println!("Opening magnet-link in default browser...");
+                    webbrowser::open(&torrent.url)?;
+                }
             } else {
                 let hint = if resolution != "?" {
                     "Selected resolution not found.\n"
