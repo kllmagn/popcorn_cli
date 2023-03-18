@@ -265,12 +265,12 @@ fn main() -> Result<()> {
         let response = get(url)?;
         let body = response.text()?;
         let document = Document::from(&body);
-        let mut sections = document.select("div.findSection").iter().filter(|x| {
-            let header = x.select("h3.findSectionHeader").text().to_string();
+        let mut sections = document.select("section.ipc-page-section").iter().filter(|x| {
+            let header = x.select("h3.ipc-title__text").text().to_string();
             header.as_str() == "Titles"
         });
         if let Some(section) = sections.next() {
-            for title in section.select(".result_text").iter() {
+            for title in section.select(".find-title-result").iter() {
                 print!("{} ", &title.text().to_string());
                 let link = title.select("a").attr("href").unwrap().to_string();
                 let id: String = link.chars().skip(7).take_while(|&x| x != '/').collect();
