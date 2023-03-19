@@ -198,8 +198,12 @@ fn main() -> Result<()> {
             }
 
             if let Some(torrent) = resp.episodes[0].torrents.get(&resolution) {
-                println!("Opening magnet-link in default browser...");
-                webbrowser::open(&torrent.url)?;
+                if matches.is_present("magnet") {
+                    println!("{}", torrent.url);
+                } else {
+                    println!("Opening magnet-link in default browser...");
+                    webbrowser::open(&torrent.url)?;
+                }
             } else {
                 let hint = if resolution != "?" {
                     "Selected resolution not found.\n"
