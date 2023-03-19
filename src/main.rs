@@ -87,6 +87,12 @@ fn main() -> Result<()> {
                 .about("Subcommand for downloading shows")
                 .arg(Arg::with_name("imdb_id").takes_value(true).required(true))
                 .arg(
+                    Arg::with_name("magnet")
+                        .short("m")
+                        .long("magnet")
+                        .takes_value(false),
+                )
+                .arg(
                     Arg::with_name("season")
                         .short("s")
                         .long("season")
